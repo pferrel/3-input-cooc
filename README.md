@@ -50,11 +50,11 @@ Open IDEA and go to the menu File->New->Project from existing sources->SBT->/pat
 
 At this point you may create a "Debug Configuration" to run. In the menu choose Run->Edit Configurations. Under "Default" choose "Application". In the dialog hit the elipsis button "..." to the right of "Environment Variables" and fill in your versions of JAVA_HOME, SPARK_HOME, and MAHOUT_HOME. In configuration editor under "Use classpath from" choose root-3-input-cooc module. 
 
-![image](http://mahout.apache.org/images/debug-config.png =400x)
+![image](http://mahout.apache.org/images/debug-config.png)
 
 Now choose "Application" in the left pane and hit the plus sign "+". give the config a name and hit the elipsis button to the right of the "Main class" field as shown.
 
-![image](http://mahout.apache.org/images/debug-config-2.png =600x)
+![image](http://mahout.apache.org/images/debug-config-2.png)
 
 
 After setting breakpoints you are now ready to debug the configuration. Go to the Run->Debug... menu and pick your configuration. This will execute using a local standalone instance of Spark.
