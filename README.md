@@ -8,13 +8,13 @@ The app reads in three user-item interactions types and creats indicators for th
 In order to build and run the CooccurrenceDriver you need to install the following:
 
 * Install the Java 7 JDK from Oracle. Mac users look here: [Java SE Development Kit 7u72](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
-* Install sbt (simple build tool) 0.13.x for [Mac](http://www.scala-sbt.org/release/tutorial/Installing-sbt-on-Mac.html),[Linux](http://www.scala-sbt.org/release/tutorial/Installing-sbt-on-Linux.html) or [manual instalation](http://www.scala-sbt.org/release/tutorial/Manual-Installation.html).
+* Install sbt (simple build tool) 0.13.x for [Mac](http://www.scala-sbt.org/release/tutorial/Installing-sbt-on-Mac.html), [Linux](http://www.scala-sbt.org/release/tutorial/Installing-sbt-on-Linux.html) or [manual instalation](http://www.scala-sbt.org/release/tutorial/Manual-Installation.html).
 * Install [Spark 1.1.1](https://spark.apache.org/docs/1.1.1/spark-standalone.html). Don't forget to setup SPARK_HOME
 * Install [Mahout 0.10.0](http://mahout.apache.org/general/downloads.html). Don't forget to setup MAHOUT_HOME and MAHOUT_LOCAL
 
 Why install if you are only using them as a library? Certain binaries and scripts are required by the libraries to get information about the environment like discovering where jars are located.
 
-Spark requires a set of jars on the classpath for the client side part of an app and another set of jars muc be passed to the Spark Context for running distributed code. The example should discover all the neccessary classes automatically.
+Spark requires a set of jars on the classpath for the client side part of an app and another set of jars must be passed to the Spark Context for running distributed code. The example should discover all the neccessary classes automatically.
 
 ##Application
 Using Mahout as a library in an application will require a little Scala code. Scala has an App trait so we'll create an object, which inherits from ```App```
