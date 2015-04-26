@@ -179,4 +179,80 @@ After setting breakpoints you are now ready to debug the configuration. Go to th
 
 For small script-like apps you may wish to use the Mahout shell. It is a Scala REPL type interactive shell built on the Spark shell with Mahout-Samsara extensions.
 
-For the shell you won't need the context, since it is created when the shell is launched. To control the configuration of Mahout and Spark we set environment variables. 
+To make the CooccurrenceDriver.scala into a script make the following changes:
+
+* You won't need the context, since it is created when the shell is launched, comment that line out.
+* Replace the logger.info lines with println
+* Remove the package info since it's not needed, this will produce the file in ```path/to/3-input-cooc/bin/CooccurrenceDriver.mscala```. 
+
+Note the extension ```.mscala``` to indicate we are using Mahout's scala extensions for math, otherwise known as [Mahout-Samsara](http://mahout.apache.org/users/environment/out-of-core-reference.html)
+
+To run the code make sure the output does not exist already
+
+    $ rm -r /path/to/3-input-cooc/data/indicators
+    
+Launch the Mahout + Spark shell:
+
+    $ mahout spark-shell
+    
+You'll see the Mahout splash:
+
+    MAHOUT_LOCAL is set, so we don't add HADOOP_CONF_DIR to classpath.
+
+                         _                 _
+             _ __ ___   __ _| |__   ___  _   _| |_
+            | '_ ` _ \ / _` | '_ \ / _ \| | | | __|
+            | | | | | | (_| | | | | (_) | |_| | |_
+            |_| |_| |_|\__,_|_| |_|\___/ \__,_|\__|  version 0.10.0
+
+      
+    Using Scala version 2.10.4 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_72)
+    Type in expressions to have them evaluated.
+    Type :help for more information.
+    15/04/26 09:30:48 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+    Created spark context..
+    Mahout distributed context is available as "implicit val sdc".
+    mahout> 
+
+To load the driver type:
+
+    mahout> :load /path/to/3-input-cooc/bin/CooccurrenceDriver.mscala
+    Loading ./bin/CooccurrenceDriver.mscala...
+    import com.google.common.collect.{HashBiMap, BiMap}
+    import org.apache.log4j.Logger
+    import org.apache.mahout.math.cf.SimilarityAnalysis
+    import org.apache.mahout.math.indexeddataset._
+    import org.apache.mahout.sparkbindings._
+    import scala.collection.immutable.HashMap
+    defined module CooccurrenceDriver
+    mahout> 
+
+To run the driver type:
+
+    mahout> CooccurrenceDriver.main(args = Array(""))
+    
+You'll get some stats printed:
+
+    Read in action purchase, which has 4 rows
+    actions has 1 elements in it.
+
+    Read in action view, which has 4 rows
+    actions has 2 elements in it.
+
+    Read in action category, which has 4 rows
+    actions has 3 elements in it.
+
+    Total number of users for all actions = 4
+
+    purchase indicator matrix:
+    Number of rows for matrix = 4
+    Number of columns for matrix = 5
+    view indicator matrix:
+    Number of rows for matrix = 4
+    Number of columns for matrix = 5
+    category indicator matrix:
+    Number of rows for matrix = 4
+    Number of columns for matrix = 7
+    
+If you look in ```path/to/3-input-cooc/data/indicators``` you should find folders containing the indicator matrices.
+
