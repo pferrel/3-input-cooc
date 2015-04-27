@@ -89,26 +89,27 @@ object CooccurrenceDriver extends App {
         existingRowIDs = userDictionary)
       userDictionary.putAll(action.rowIDs)
       actions = actions :+ (actionDescription._1, action) // put the name in the tuple with the indexedDataset
-      logger.info("\n\n\nRead in action " + actionDescription._1 +", which has " + action.matrix.nrow.toString + " rows")
-      logger.info("actions has " + actions.length + " elements in it.\n\n\n")
+      logger.info(
+        "\n\n Read in action " + actionDescription._1 +", which has " + action.matrix.nrow + " rows\n" +
+        " and " + action.matrix.nrow + " columns in it.\n")
     }
 
     // After all actions are read in the userDictonary will contain every user seen, even if they may not have
     // taken all actions . Now we adjust the row rank of all IndxedDataset's to have this number of rows
     // Note: this is very important or the cooccurrence calc may fail
     val numUsers = userDictionary.size() // one more than the cardinality
-    logger.info("\n\nTotal number of users for all actions = " + numUsers + "\n\n")
+    logger.info("\nTotal number of users for all actions = " + numUsers + "\n")
     val resizedNameActionPairs = actions.map { a =>
-      logger.info(a._1 + " indicator matrix:")
-      logger.info("Number of rows for matrix = " + a._2.matrix.nrow )
-      logger.info("Number of columns for matrix = " + a._2.matrix.ncol )
+      val numRows = a._2.matrix.nrow
       val resizedMatrix = a._2.create(a._2.matrix, userDictionary, a._2.columnIDs).newRowCardinality(numUsers)
-      logger.info(a._1 + " indicator matrix:")
-      logger.info("Number of rows after resize = " + resizedMatrix.matrix.nrow )
-      logger.info("Number of columns after resize = " + resizedMatrix.matrix.ncol )
+      logger.info(
+        "\n\n " + a._1 + " indicator matrix \n" +
+        " number of rows = " + numRows + "\n" +
+        " number of columns = " + a._2.matrix.ncol + "\n" +
+        " number of rows after resize = " + resizedMatrix.matrix.nrow + "\n")
       (a._1, resizedMatrix)
     }
-    logger.info("\n\n")
+    logger.info("\n")
     resizedNameActionPairs
   }
 
